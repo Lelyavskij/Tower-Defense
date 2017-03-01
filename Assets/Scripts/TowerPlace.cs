@@ -13,11 +13,11 @@ public class TowerPlace : MonoBehaviour
     private GameObject curTower;
 
 
-    void OnMouseDown()
+    private void OnMouseDown()
     {
         if (empty)
         {
-            curTower = GameObject.Instantiate(Tower, transform.position + offset, Quaternion.identity) as GameObject;
+            curTower = Instantiate(Tower, transform.position + offset, Quaternion.identity) as GameObject;
             empty = false;
         }
     }
