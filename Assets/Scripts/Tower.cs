@@ -41,8 +41,8 @@ public class Tower : MonoBehaviour {
         IsShoot = true;
         yield return new WaitForSeconds(shootDelay);
         GameObject b = GameObject.Instantiate(bullet, shootElement.position,Quaternion.identity) as GameObject;
-        b.GetComponent<bulletTower>().target = target;
-         b.GetComponent<bulletTower>().twr = this;
+        b.GetComponent<BulletTower>().target = target;
+         b.GetComponent<BulletTower>().twr = this;
         IsShoot = false;
 
     }

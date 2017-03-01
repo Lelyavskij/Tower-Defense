@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WaveSpawn : MonoBehaviour {
-
+public class WaveSpawn : MonoBehaviour
+{
     public int WaveSize;
 
     public GameObject EnemyPrefab;
@@ -21,34 +21,32 @@ public class WaveSpawn : MonoBehaviour {
 
     public GameObject canvas;
 
-   
+    private float timer;
 
-
-    void Start () {
-
-        InvokeRepeating("SpawnEnemy", startTime, EnemyInterval);
-	
-	}
-    void Update()
+    private void Update()
     {
-
         if (enemyCount == WaveSize)
         {
-            CancelInvoke("SpawnEnemy");
+            return;
+        }
+
+        timer += Time.deltaTime;
+        if (timer > EnemyInterval)
+        {
+            SpawnEnemy();
+            timer = 0;
         }
     }
-        void SpawnEnemy()
-    {
 
+    private void SpawnEnemy()
+    {
         enemyCount++;
-        GameObject enemy = GameObject.Instantiate(EnemyPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
+        var enemy = Instantiate(EnemyPrefab, spawnPoint.position, Quaternion.identity) as GameObject;
         enemy.GetComponent<MoveToWavePoints>().waypoints = WayPoints;
-        GameObject hp = GameObject.Instantiate(HP, Vector3.zero, Quaternion.identity) as GameObject;
+        var hp = Instantiate(HP, Vector3.zero, Quaternion.identity) as GameObject;
         hp.transform.SetParent(canvas.transform);
         hp.GetComponent<HpBar>().enemy = enemy;
         enemy.GetComponent<MoveToWavePoints>().hp = hp;
 
     }
-	
-	
 }
