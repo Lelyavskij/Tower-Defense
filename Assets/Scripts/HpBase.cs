@@ -11,9 +11,9 @@ public class HpBase : MonoBehaviour
         HPtext.text = HP.ToString();  
 	}
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("enemyBag"))
+        if (other.CompareTag("enemyBug"))
         {
             HP -= 10; 
             Destroy(other.gameObject);
