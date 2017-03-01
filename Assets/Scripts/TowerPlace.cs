@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TowerPlace : MonoBehaviour {
+public class TowerPlace : MonoBehaviour 
+{
 
     public GameObject Tower;
 
-    public bool empty=true;
+    public bool empty = true;
 
     public Vector3 offset;
 
-    public GameObject curTower;
+    private GameObject curTower;
 
 
     void OnMouseDown()
@@ -20,4 +21,4 @@ public class TowerPlace : MonoBehaviour {
             empty = false;
         }
     }
-    }
+}
