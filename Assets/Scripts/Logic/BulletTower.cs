@@ -24,7 +24,7 @@ public class BulletTower : MonoBehaviour
     {
         if (other.gameObject.transform == target)
         {
-            target.GetComponent<MoveToWavePoints>().hp.GetComponent<HpBar>().Dmg(twr.dmg);
+            target.GetComponent<EnemyEntity>().Damage(twr.dmg);
             Destroy(gameObject);
         }
 	}
