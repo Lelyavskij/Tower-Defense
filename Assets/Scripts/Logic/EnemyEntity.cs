@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyEntity : MonoBehaviour
 {
     public event Action<int> HpChanged = delegate { };
-    public event Action Destroyed = delegate { }; 
+    public event Action<EnemyEntity> Destroyed = delegate { }; 
 
     private int _currentHp;
 
@@ -30,7 +30,7 @@ public class EnemyEntity : MonoBehaviour
     public void DestroySelf()
     {
         Destroy(gameObject);
-        Destroyed();
+        Destroyed(this);
     }
 
     private void Start()

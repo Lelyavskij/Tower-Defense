@@ -1,18 +1,36 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using UnityEngine;
 
-public class Base : MonoBehaviour 
+public class Base : MonoBehaviour
 {
-    private int _currentHp = 100;
+    public event Action Lose = delegate { }; 
 
-    public int CurrentHp { get { return _currentHp; } }
+    private int _currentHp;
+
+    public int CurrentHp
+    {
+        get { return _currentHp; }
+        private set
+        {
+            _currentHp = value;
+            if (_currentHp <= 0)
+            {
+                Lose();
+            }
+        }
+    }
+
+    public void Reset()
+    {
+        CurrentHp = 100;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         var enemy = other.GetComponent<EnemyEntity>();
         if (enemy != null)
         {
-            _currentHp -= 10;
+            CurrentHp -= 10;
             enemy.DestroySelf();
         }
     }

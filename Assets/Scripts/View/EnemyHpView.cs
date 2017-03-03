@@ -25,7 +25,7 @@ public class EnemyHpView : MonoBehaviour
         _text.text = hp.ToString();
     }
 
-    private void OnDestroyed()
+    private void OnDestroyed(EnemyEntity enemy)
     {
         Destroy(gameObject);
     }

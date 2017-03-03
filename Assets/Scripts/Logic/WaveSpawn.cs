@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class WaveSpawn : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class WaveSpawn : MonoBehaviour
     [SerializeField]
     private Transform _spawnPoint;
 
+    private List<EnemyEntity> _enemyes = new List<EnemyEntity>(); 
+
     public Canvas _canvas;
 
     private int _waveSize;
@@ -19,14 +23,32 @@ public class WaveSpawn : MonoBehaviour
     private int _enemyInterval;
     private float _timer;
 
-    private void Start()
+    private bool _isInitilized;
+
+    public void StartGame(int waveSize, int interval)
     {
-        _waveSize = 5;
-        _enemyInterval = 2;
+        _waveSize = waveSize;
+        _enemyInterval = interval;
+        _isInitilized = true;
+        _enemyCount = 0;
+    }
+
+    public void FinishGame()
+    {
+        _isInitilized = false;
+        for (int i = 0; i < _enemyes.Count; i++)
+        {
+            _enemyes[i].DestroySelf();
+        }
     }
 
     private void Update()
     {
+        if (!_isInitilized)
+        {
+            return;
+        }
+
         if (_enemyCount == _waveSize)
         {
             return;
@@ -48,7 +70,16 @@ public class WaveSpawn : MonoBehaviour
 
         var enemy = Instantiate(_enemyPrefab, _spawnPoint.position, Quaternion.identity) as EnemyEntity;
         enemy.GetComponent<EnemyMovement>().SetPath(_wayPoints);
+        enemy.Destroyed += OnEnemyDestroyed;
+        _enemyes.Add(enemy);
+
         hp.SetTarget(enemy);
+    }
+
+    private void OnEnemyDestroyed(EnemyEntity entity)
+    {
+        entity.Destroyed -= OnEnemyDestroyed;
+        _enemyes.Remove(entity);
     }
 }
 
