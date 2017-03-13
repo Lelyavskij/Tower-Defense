@@ -14,8 +14,20 @@ public class GameController : MonoBehaviour
     [SerializeField] 
     private Base _base;
 
+    private bool gameOver;
+
+    private bool restart;
+
+
+   
+
     private void Start()
     {
+        gameOver = false;
+        restart = false;
+        restartText.text = "";
+        gameOverText.text = "";
+
         _startGame.onClick.AddListener(OnStartGameButtonPressed);
     }
 
@@ -35,4 +47,12 @@ public class GameController : MonoBehaviour
         _spawn2.FinishGame();
         _startGame.gameObject.SetActive(true);
     }
+
+    public void GameOver()
+    {
+        gameOverText.text = "GameOver!";
+        gameOver = true;
+
+    }
+
 }
