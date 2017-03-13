@@ -45,9 +45,10 @@ public class WaveSpawn : MonoBehaviour
     public void FinishGame()
     {
         _isInitilized = false;
-        for (int i = 0; i < _enemyes.Count; i++)
+        var enemies = FindObjectsOfType<EnemyEntity>();
+        for (int i = 0; i < enemies.Length; i++)
         {
-            _enemyes[i].DestroySelf();
+            enemies[i].DestroySelf();
         }
     }
 
@@ -89,9 +90,9 @@ public class WaveSpawn : MonoBehaviour
         }
         
         enemy.GetComponent<EnemyMovement>().SetPath(_wayPoints);
-        enemy.Destroyed += OnEnemyDestroyed;
         _enemyes.Add(enemy);
         EnemyCountChanged();
+        enemy.Destroyed += OnEnemyDestroyed;
 
         hp.SetTarget(enemy);
     }
