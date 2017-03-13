@@ -5,20 +5,15 @@ public class TowerPlace : MonoBehaviour
 {
 
     public GameObject Tower;
-
-    public bool empty = true;
-
     public Vector3 offset;
 
-    private GameObject curTower;
-
+    private GameObject _curTower;
 
     private void OnMouseDown()
     {
-        if (empty)
+        if (_curTower == null)
         {
-            curTower = Instantiate(Tower, transform.position + offset, Quaternion.identity) as GameObject;
-            empty = false;
+            _curTower = Instantiate(Tower, transform.position + offset, Quaternion.identity) as GameObject;
         }
     }
 }

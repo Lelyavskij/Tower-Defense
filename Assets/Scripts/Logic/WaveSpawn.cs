@@ -13,6 +13,8 @@ public class WaveSpawn : MonoBehaviour
     [SerializeField]
     private Transform _spawnPoint;
 
+    public event Action EnemyCountChanged = delegate { }; 
+
     private List<EnemyEntity> _enemyes = new List<EnemyEntity>(); 
 
     public Canvas _canvas;
@@ -24,6 +26,11 @@ public class WaveSpawn : MonoBehaviour
     private float _timer;
 
     private bool _isInitilized;
+
+    public int GetEnemyCount
+    {
+        get { return _enemyes.Count; }
+    }
 
     public void StartGame(int waveSize, int interval)
     {
@@ -72,6 +79,7 @@ public class WaveSpawn : MonoBehaviour
         enemy.GetComponent<EnemyMovement>().SetPath(_wayPoints);
         enemy.Destroyed += OnEnemyDestroyed;
         _enemyes.Add(enemy);
+        EnemyCountChanged();
 
         hp.SetTarget(enemy);
     }
@@ -80,6 +88,7 @@ public class WaveSpawn : MonoBehaviour
     {
         entity.Destroyed -= OnEnemyDestroyed;
         _enemyes.Remove(entity);
+        EnemyCountChanged();
     }
 }
 
