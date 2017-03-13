@@ -1,29 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Tower : MonoBehaviour {
+public class Tower : MonoBehaviour 
+{
 
     public Transform shootElement;
 
     public Transform LookAtObject;
 
-    public int dmg = 10;
-    
-    public GameObject bullet;
+    public int Damage = 10;
+
+    [SerializeField]
+    private float _shootDelay;
+    [SerializeField]
+    private GameObject _bulletPrefab;
 
     public Transform target;
 
-    public float shootDelay;
-
-    bool IsShoot;
-
-	void Start () {
-
+    private bool IsShoot;
 	
-	}
-	
-	
-	void Update () {
+	private void Update () 
+    {
         if (target)
         {
             LookAtObject.transform.LookAt(target);
@@ -31,18 +28,16 @@ public class Tower : MonoBehaviour {
             {
                 StartCoroutine(shoot());
             }
-
         }
-       
-	
 	}
-    IEnumerator shoot()
+
+    private IEnumerator shoot()
     {
         IsShoot = true;
-        yield return new WaitForSeconds(shootDelay);
-        GameObject b = GameObject.Instantiate(bullet, shootElement.position,Quaternion.identity) as GameObject;
-        b.GetComponent<BulletTower>().target = target;
-         b.GetComponent<BulletTower>().twr = this;
+        yield return new WaitForSeconds(_shootDelay);
+        var bullet = Instantiate(_bulletPrefab, shootElement.position, Quaternion.identity) as GameObject;
+        bullet.GetComponent<BulletTower>().target = target;
+         bullet.GetComponent<BulletTower>().twr = this;
         IsShoot = false;
 
     }

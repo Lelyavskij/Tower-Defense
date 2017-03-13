@@ -4,16 +4,28 @@ using System.Collections;
 public class TowerPlace : MonoBehaviour 
 {
 
-    public GameObject Tower;
+    [SerializeField]
+    private Tower _canonTowerPrefab;
+    [SerializeField]
+    private Tower _laserTowerPrefab;
+
     public Vector3 offset;
 
-    private GameObject _curTower;
+    private Tower _curTower;
 
     private void OnMouseDown()
     {
         if (_curTower == null)
         {
-            _curTower = Instantiate(Tower, transform.position + offset, Quaternion.identity) as GameObject;
+            var rnd = Random.Range(0, 2);
+            if (rnd == 0)
+            {
+                _curTower = Instantiate(_canonTowerPrefab, transform.position + offset, Quaternion.identity) as Tower;
+            }
+            else
+            {
+                _curTower = Instantiate(_laserTowerPrefab, transform.position + offset, Quaternion.identity) as Tower;
+            }
         }
     }
 }

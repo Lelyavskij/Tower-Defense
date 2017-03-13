@@ -4,7 +4,12 @@ using UnityEngine;
 public class EnemyEntity : MonoBehaviour
 {
     public event Action<int> HpChanged = delegate { };
-    public event Action<EnemyEntity> Destroyed = delegate { }; 
+    public event Action<EnemyEntity> Destroyed = delegate { };
+
+    [SerializeField] 
+    private int _baseHp;
+    [SerializeField]
+    private int _damage;
 
     private int _currentHp;
 
@@ -22,6 +27,11 @@ public class EnemyEntity : MonoBehaviour
         }
     }
 
+    public int GetDamage
+    {
+        get { return _damage; }
+    }
+
     public void Damage(int damage)
     {
         CurrentHp -= damage;
@@ -35,7 +45,7 @@ public class EnemyEntity : MonoBehaviour
 
     private void Start()
     {
-        CurrentHp = 30;
+        CurrentHp = _baseHp;
     }
 
 }

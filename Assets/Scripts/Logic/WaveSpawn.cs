@@ -5,7 +5,9 @@ using UnityEngine;
 public class WaveSpawn : MonoBehaviour
 {
     [SerializeField]
-    private EnemyEntity _enemyPrefab;
+    private EnemyEntity _golemPrefab;
+    [SerializeField]
+    private EnemyEntity _gydraPrefab;
     [SerializeField]
     private EnemyHpView _enemyHpViewPrefab;
     [SerializeField]
@@ -75,7 +77,17 @@ public class WaveSpawn : MonoBehaviour
         var hp = Instantiate(_enemyHpViewPrefab, Vector3.zero, Quaternion.identity) as EnemyHpView;
         hp.transform.SetParent(_canvas.transform);
 
-        var enemy = Instantiate(_enemyPrefab, _spawnPoint.position, Quaternion.identity) as EnemyEntity;
+        EnemyEntity enemy = null;
+        var rnd = UnityEngine.Random.Range(0, 2);
+        if (rnd == 0)
+        {
+            enemy = Instantiate(_golemPrefab, _spawnPoint.position, Quaternion.identity) as EnemyEntity;
+        }
+        else
+        {
+            enemy = Instantiate(_gydraPrefab, _spawnPoint.position, Quaternion.identity) as EnemyEntity;
+        }
+        
         enemy.GetComponent<EnemyMovement>().SetPath(_wayPoints);
         enemy.Destroyed += OnEnemyDestroyed;
         _enemyes.Add(enemy);

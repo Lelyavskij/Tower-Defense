@@ -30,7 +30,7 @@ public class Base : MonoBehaviour
         var enemy = other.GetComponent<EnemyEntity>();
         if (enemy != null)
         {
-            CurrentHp -= 10;
+            CurrentHp -= enemy.GetDamage;
             enemy.DestroySelf();
         }
     }
